@@ -1,21 +1,29 @@
-data class Elf(val id: Int, val calories: List<Int>) {
-    val totalCalories = calories.sum()
-}
+object Day01 : Puzzle {
+    data class Elf(val id: Int, val calories: List<Int>) {
+        val totalCalories = calories.sum()
+    }
 
-fun main() = withInput("Day01") { input ->
-    val elves = input.chunkedSplitOn { it.isEmpty() }
-        .map { it.map(String::toInt) }
-        .mapIndexed { id, calories -> Elf(id, calories) }
-        .toList()
+    override fun solve() {
+        val elves = withInput("Day01") { input ->
+            input.chunkedSplitOn { it.isEmpty() }
+                .map { it.map(String::toInt) }
+                .mapIndexed { id, calories -> Elf(id, calories) }
+                .toList()
+        }
 
-    val mostCalorieRichElf = elves
-        .maxBy { it.totalCalories }
+        val mostCalorieRichElf = elves
+            .maxBy { it.totalCalories }
 
-    println("Solution #1: $mostCalorieRichElf, total: ${mostCalorieRichElf.totalCalories}")
+        val firstHalfSolution = mostCalorieRichElf.totalCalories
+        println("Solution A: $firstHalfSolution, $mostCalorieRichElf")
+        assert(firstHalfSolution == 68775)
 
-    val topKCalorieRichElves = elves
-        .sortedByDescending { it.totalCalories }
-        .take(3).toList()
+        val topKCalorieRichElves = elves
+            .sortedByDescending { it.totalCalories }
+            .take(3).toList()
 
-    println("Solution #2: $topKCalorieRichElves, total: ${topKCalorieRichElves.sumOf { it.totalCalories }}")
+        val secondHalfSolution = topKCalorieRichElves.sumOf { it.totalCalories }
+        println("Solution B: $secondHalfSolution, $topKCalorieRichElves")
+        assert(secondHalfSolution == 202585)
+    }
 }
