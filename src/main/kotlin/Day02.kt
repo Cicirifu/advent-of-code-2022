@@ -32,32 +32,32 @@ object Day02 : Puzzle {
     }
 
     override fun solve() {
-        val matches = withInput("Day02") { input ->
-            input.filter { it.isNotEmpty() }
-                .mapIndexed { i, line ->
-                    Match(
-                        id = i,
-                        opponentMove = Move.DeserializationOrder[line[0] - 'A'],
-                        playerMove = Move.DeserializationOrder[line[2] - 'X']
-                    )
-                }
-                .toList()
+        val matches = withInput("Day02") { input -> input
+            .filter { it.isNotEmpty() }
+            .mapIndexed { i, line ->
+                Match(
+                    id = i,
+                    opponentMove = Move.DeserializationOrder[line[0] - 'A'],
+                    playerMove = Move.DeserializationOrder[line[2] - 'X']
+                )
+            }
+            .toList()
         }
 
         val firstHalfSolution = matches.sumOf { it.score }
         println("Solution A: $firstHalfSolution")
         assert(firstHalfSolution == 13675)
 
-        val correctMatches = withInput("Day02") { input ->
-            input.filter { it.isNotEmpty() }
-                .mapIndexed { i, line ->
-                    CorrectMatch(
-                        id = i,
-                        opponentMove = Move.DeserializationOrder[line[0] - 'A'],
-                        desiredOutcome = Outcome.DeserializationOrder[line[2] - 'X']
-                    )
-                }
-                .toList()
+        val correctMatches = withInput("Day02") { input -> input
+            .filter { it.isNotEmpty() }
+            .mapIndexed { i, line ->
+                CorrectMatch(
+                    id = i,
+                    opponentMove = Move.DeserializationOrder[line[0] - 'A'],
+                    desiredOutcome = Outcome.DeserializationOrder[line[2] - 'X']
+                )
+            }
+            .toList()
         }
 
         val secondHalfSolution = correctMatches.sumOf { it.score }

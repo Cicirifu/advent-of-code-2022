@@ -4,15 +4,14 @@ object Day01 : Puzzle {
     }
 
     override fun solve() {
-        val elves = withInput("Day01") { input ->
-            input.chunkedSplitOn { it.isEmpty() }
-                .map { it.map(String::toInt) }
-                .mapIndexed { id, calories -> Elf(id, calories) }
-                .toList()
+        val elves = withInput("Day01") { input -> input
+            .chunkedSplitOn { it.isEmpty() }
+            .map { it.map(String::toInt) }
+            .mapIndexed { id, calories -> Elf(id, calories) }
+            .toList()
         }
 
-        val mostCalorieRichElf = elves
-            .maxBy { it.totalCalories }
+        val mostCalorieRichElf = elves.maxBy { it.totalCalories }
 
         val firstHalfSolution = mostCalorieRichElf.totalCalories
         println("Solution A: $firstHalfSolution, $mostCalorieRichElf")
@@ -20,7 +19,7 @@ object Day01 : Puzzle {
 
         val topKCalorieRichElves = elves
             .sortedByDescending { it.totalCalories }
-            .take(3).toList()
+            .take(3)
 
         val secondHalfSolution = topKCalorieRichElves.sumOf { it.totalCalories }
         println("Solution B: $secondHalfSolution, $topKCalorieRichElves")

@@ -7,7 +7,7 @@ interface Puzzle {
 
 inline fun <T> withInput(inputName: String, body: (Sequence<String>) -> T): T {
     Launcher::class.java.getResource("${inputName}.input")!!.openStream().use { s ->
-        return InputStreamReader(s).buffered().useLines(body)
+        return s.bufferedReader(Charsets.UTF_8).useLines(body)
     }
 }
 
@@ -35,7 +35,7 @@ object Launcher {
         val puzzle = try {
             Class.forName(puzzleName).kotlin.objectInstance as Puzzle
         } catch (ex: Exception) {
-            println("Puzzle '${puzzleName}'could not be found.")
+            println("Puzzle '${puzzleName}' could not be found.")
             return
         }
         puzzle.solve()

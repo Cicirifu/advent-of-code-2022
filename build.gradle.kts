@@ -16,7 +16,7 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-(1 .. 2).forEach {
+(1 .. 3).forEach {
     val day = it.toString().padStart(2, '0')
     task("runDay${day}", type = JavaExec::class) {
         group = ApplicationPlugin.APPLICATION_GROUP
