@@ -3,20 +3,20 @@ import kotlin.test.assertEquals
 class Day04 {
     private data class ElfPair(val a: IntRange, val b: IntRange) {
         companion object {
-            fun parse(string: String) = string.split("-", ",").let {
+            fun parse(string: String) = string.split("-", ",").let { (a0, a1, b0, b1) ->
                 ElfPair(
-                    a = it[0].toInt() .. it[1].toInt(),
-                    b = it[2].toInt() .. it[3].toInt()
+                    a = a0.toInt() .. a1.toInt(),
+                    b = b0.toInt() .. b1.toInt()
                 )
             }
         }
     }
 
     private infix fun <T : Comparable<T>> ClosedRange<T>.fullyContains(other: ClosedRange<T>) =
-        other.start in this && other.endInclusive in this
+        start <= other.start && endInclusive >= other.endInclusive
 
     private infix fun <T : Comparable<T>> ClosedRange<T>.overlaps(other: ClosedRange<T>) =
-        other.start in this || other.endInclusive in this || other fullyContains this
+        start <= other.endInclusive && other.start <= endInclusive
 
     @Puzzle
     fun solve() {
