@@ -9,20 +9,18 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("reflect"))
+    testImplementation(kotlin("stdlib"))
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("reflect"))
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "17"
+    }
 
-(1 .. 3).forEach {
-    val day = it.toString().padStart(2, '0')
-    task("runDay${day}", type = JavaExec::class) {
-        group = ApplicationPlugin.APPLICATION_GROUP
-        description = "Run the script for puzzle day ${day}."
-        classpath = sourceSets["main"].runtimeClasspath
-        mainClass.set("Launcher")
-        args = listOf("Day${day}")
+    test {
+        useJUnitPlatform()
+        testLogging.showExceptions = true
     }
 }

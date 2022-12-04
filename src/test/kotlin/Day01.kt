@@ -1,21 +1,23 @@
-object Day01 : Puzzle {
-    data class Elf(val id: Int, val calories: List<Int>) {
+import kotlin.test.assertEquals
+
+class Day01 {
+    private data class Elf(val id: Int, val calories: List<Int>) {
         val totalCalories = calories.sum()
     }
 
-    override fun solve() {
-        val elves = withInput("Day01") { input -> input
+    @Puzzle
+    fun solve() {
+        val elves = readInput("Day01").asSequence()
             .chunkedSplitOn { it.isEmpty() }
             .map { it.map(String::toInt) }
             .mapIndexed { id, calories -> Elf(id, calories) }
             .toList()
-        }
 
         val mostCalorieRichElf = elves.maxBy { it.totalCalories }
 
         val firstHalfSolution = mostCalorieRichElf.totalCalories
         println("Solution A: $firstHalfSolution, $mostCalorieRichElf")
-        assert(firstHalfSolution == 68775)
+        assertEquals(68775, firstHalfSolution)
 
         val topKCalorieRichElves = elves
             .sortedByDescending { it.totalCalories }
@@ -23,6 +25,6 @@ object Day01 : Puzzle {
 
         val secondHalfSolution = topKCalorieRichElves.sumOf { it.totalCalories }
         println("Solution B: $secondHalfSolution, $topKCalorieRichElves")
-        assert(secondHalfSolution == 202585)
+        assertEquals(202585, secondHalfSolution)
     }
 }
